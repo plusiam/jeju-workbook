@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제주 탐방 디지털 워크북</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"></script>
+    <style>
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css');
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .jeju-blue {
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+        }
+        
+        .activity-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid #06b6d4;
+        }
+        
+        .activity-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .nav-item {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item.active {
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            color: white;
+        }
+        
+        .floating-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 40;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .floating-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        body {
+            padding-top: 70px;
+        }
+        
+        .photo-upload-area {
+            border: 2px dashed #06b6d4;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f7fa 100%);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .photo-upload-area:hover {
+            border-color: #0891b2;
+            background: linear-gradient(135deg, #e6fffa 0%, #ccfbf1 100%);
+        }
+        
+        .photo-upload-area.dragover {
+            border-color: #059669;
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        }
+        
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .save-button {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .save-button:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-1px);
+        }
+        
+        @media (max-width: 768px) {
+            body { padding-top: 90px; }
+            .progress-bar { padding: 8px; }
+            .nav-item { font-size: 12px; padding: 8px 12px; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+
+    <!-- 상단 진행 바 -->
+    <div class="progress-bar shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center">
+                <h1 class="text-lg font-bold text-gray-800">제주 탐방 워크북</h1>
+                <div class="flex space-x-2">
+                    <button class="nav-item active px-3 py-2 rounded-lg text-sm font-medium" onclick="scrollToSection('home')">HOME</button>
+                    <button class="nav-item px-3 py-2 rounded-lg text-sm font-medium" onclick="scrollToSection('day1')">1일차</button>
+                    <button class="nav-item px-3 py-2 rounded-lg text-sm font-medium" onclick="scrollToSection('day2')">2일차</button>
+                    <button class="nav-item px-3 py-2 rounded-lg text-sm font-medium" onclick="scrollToSection('day3')">3일차</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 홈 섹션 -->
+    <section id="home" class="min-h-screen gradient-bg text-white">
+        <div class="container mx-auto px-4 py-20 text-center">
+            <div class="mb-8">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">다다익선 글로컬 문화탐험대</h1>
+                <h2 class="text-2xl md:text-3xl font-semibold mb-8">제주 탐방 디지털 워크북</h2>
+                <div class="text-6xl mb-4">🏝️</div>
+                <p class="text-lg md:text-xl opacity-90">2024년 8월 7일 ~ 9일 (2박 3일)</p>
+            </div>
+            
+            <div class="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-xl p-6 max-w-3xl mx-auto">
+                <h3 class="text-xl font-bold mb-4">✨ 여행 일정 요약</h3>
+                <div class="grid gap-4 text-left">
+                    <div class="bg-white bg-opacity-10 rounded-lg p-4">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <span class="bg-red-500 bg-opacity-80 text-white px-3 py-1 rounded-full text-sm font-bold">1일차</span>
+                            <span class="font-semibold">8월 7일 (수)</span>
+                        </div>
+                        <div class="text-sm space-y-1 ml-16">
+                            <div class="flex justify-between">
+                                <span>📍 집결: 대구공항 국내선 1번 게이트 안</span>
+                                <span class="font-bold text-yellow-200">08:30</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>✈️ 출발: 진에어 LJ423</span>
+                                <span>10:10</span>
+                            </div>
+                            <div>🏃‍♂️ 런닝맨 제주 → 💧 정방폭포</div>
+                        </div>
+                    </div>
+                    <div class="bg-white bg-opacity-10 rounded-lg p-4">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <span class="bg-blue-500 bg-opacity-80 text-white px-3 py-1 rounded-full text-sm font-bold">2일차</span>
+                            <span class="font-semibold">8월 8일 (목)</span>
+                        </div>
+                        <div class="text-sm ml-16">
+                            🐠 아쿠아플라넷 → 🎨 아르떼뮤지엄 → ♻️ 서프라이즈테마파크
+                        </div>
+                    </div>
+                    <div class="bg-white bg-opacity-10 rounded-lg p-4">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <span class="bg-green-500 bg-opacity-80 text-white px-3 py-1 rounded-full text-sm font-bold">3일차</span>
+                            <span class="font-semibold">8월 9일 (금)</span>
+                        </div>
+                        <div class="text-sm space-y-1 ml-16">
+                            <div>🍊 알제이체험스튜디오 → 🏛️ 국립제주박물관</div>
+                            <div class="flex justify-between">
+                                <span>✈️ 대구공항 도착: 진에어 LJ428</span>
+                                <span class="font-bold text-yellow-200">17:35</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <div class="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-xl p-6">
+                    <h3 class="text-lg font-bold mb-3">🛡️ 안전 수칙</h3>
+                    <ul class="text-sm space-y-2 text-left">
+                        <li>• 단체행동 원칙 준수</li>
+                        <li>• 안전벨트 착용 필수</li>
+                        <li>• 개인행동 금지</li>
+                        <li>• 지시사항 준수</li>
+                    </ul>
+                </div>
+                <div class="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-xl p-6">
+                    <h3 class="text-lg font-bold mb-3">📱 워크북 사용법</h3>
+                    <ul class="text-sm space-y-2 text-left">
+                        <li>• 각 활동별 사진 촬영</li>
+                        <li>• 느낀 점 자유롭게 기록</li>
+                        <li>• 완성된 활동지 저장</li>
+                        <li>• 오프라인에서도 사용 가능</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 워크북 다운로드 버튼들 -->
+            <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center max-w-2xl mx-auto">
+                <button 
+                    onclick="printWorkbook()"
+                    class="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg hover:bg-opacity-30 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 flex items-center justify-center space-x-2"
+                >
+                    <span class="text-lg">🖨️</span>
+                    <span>전체 워크북 출력/PDF 저장</span>
+                </button>
+                
+                <button 
+                    onclick="downloadCompleteWorkbook()"
+                    class="bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg hover:bg-opacity-30 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 flex items-center justify-center space-x-2"
+                >
+                    <span class="text-lg">💾</span>
+                    <span>완성된 워크북 이미지로 저장</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 1일차 섹션 -->
+    <section id="day1" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">🌅 1일차 - 제주도 첫인상</h2>
+                <p class="text-gray-600">대구공항 출발부터 정방폭포까지의 첫날 여정</p>
+            </div>
+
+            <!-- 활동 1: 런닝맨 제주 -->
+            <div class="activity-card bg-white rounded-xl shadow-lg p-6 mb-8">
+                <div class="flex items-center mb-4">
+                    <span class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm font-bold mr-3">Activity 1</span>
+                    <h3 class="text-xl font-bold text-gray-800">🏃‍♂️ 런닝맨 제주</h3>
+                </div>
+                
+                <p class="text-gray-600 mb-6">제주의 새로운 체험관! 런닝맨 멤버가 되어 미션을 수행하는 익사이팅 실내 어트랙션입니다.</p>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <div class="photo-upload-area mb-4" onclick="uploadPhoto('running-man')">
+                            <div id="running-man-preview" class="hidden">
+                                <img id="running-man-img" class="preview-image mx-auto" />
+                            </div>
+                            <div id="running-man-upload" class="upload-placeholder">
+                                <div class="text-4xl mb-2">📸</div>
+                                <p class="text-gray-600 font-medium">사진 추가하기</p>
+                                <p class="text-gray-400 text-sm">클릭하여 사진을 선택하세요</p>
+                            </div>
+                        </div>
+                        <input type="file" id="running-man-input" accept="image/*" style="display: none;" onchange="handlePhotoUpload('running-man')">
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-3">💭 체험 후 느낀 점</h4>
+                        <textarea 
+                            id="running-man-text"
+                            class="w-full h-32 p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none resize-none"
+                            placeholder="런닝맨 제주에서 가장 즐거웠던 체험과 느낌을 자유롭게 적어보세요."
+                        ></textarea>
+                        
+                        <div class="mt-4">
+                            <h5 class="font-semibold text-gray-700 mb-2">🤔 탐구 질문</h5>
+                            <p class="text-sm text-gray-600 bg-blue-50 p-3 rounded-lg">제주도가 관광지로 유명해진 이유는 무엇일까요?</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button 
+                    class="save-button text-white px-6 py-2 rounded-lg font-medium mt-4 w-full md:w-auto"
+                    onclick="saveActivity('running-man', '런닝맨 제주')"
+                >
+                    📱 이미지로 저장하기
+                </button>
+            </div>
+
+            <!-- 활동 2: 정방폭포 -->
+            <div class="activity-card bg-white rounded-xl shadow-lg p-6 mb-8">
+                <div class="flex items-center mb-4">
+                    <span class="bg-gradient-to-r from-blue-500 to-teal-500 text-white px-3 py-1 rounded-full text-sm font-bold mr-3">Activity 2</span>
+                    <h3 class="text-xl font-bold text-gray-800">💧 정방폭포</h3>
+                </div>
+                
+                <p class="text-gray-600 mb-6">폭포수가 바다로 떨어지는 동양 유일의 해안폭포! 제주도 3대 폭포 중 하나입니다.</p>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <div class="photo-upload-area mb-4" onclick="uploadPhoto('jeongbang')">
+                            <div id="jeongbang-preview" class="hidden">
+                                <img id="jeongbang-img" class="preview-image mx-auto" />
+                            </div>
+                            <div id="jeongbang-upload" class="upload-placeholder">
+                                <div class="text-4xl mb-2">📸</div>
+                                <p class="text-gray-600 font-medium">사진 추가하기</p>
+                                <p class="text-gray-400 text-sm">클릭하여 사진을 선택하세요</p>
+                            </div>
+                        </div>
+                        <input type="file" id="jeongbang-input" accept="image/*" style="display: none;" onchange="handlePhotoUpload('jeongbang')">
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-3">💭 체험 후 느낀 점</h4>
+                        <textarea 
+                            id="jeongbang-text"
+                            class="w-full h-32 p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none resize-none"
+                            placeholder="정방폭포의 웅장함과 아름다움에 대한 느낌을 적어보세요."
+                        ></textarea>
+                        
+                        <div class="mt-4">
+                            <h5 class="font-semibold text-gray-700 mb-2">🤔 탐구 질문</h5>
+                            <p class="text-sm text-gray-600 bg-blue-50 p-3 rounded-lg">제주도 3대 폭포는 어디일까요? 폭포를 이용한 관광 상품 아이디어를 제안해보세요.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button 
+                    class="save-button text-white px-6 py-2 rounded-lg font-medium mt-4 w-full md:w-auto"
+                    onclick="saveActivity('jeongbang', '정방폭포')"
+                >
+                    📱 이미지로 저장하기
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2일차 섹션 -->
+    <section id="day2" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">🌊 2일차 - 바다와 예술의 만남</h2>
+                <p class="text-gray-600">아쿠아플라넷부터 서프라이즈테마파크까지</p>
+            </div>
+
+            <!-- 활동 3: 아쿠아플라넷 -->
+            <div class="activity-card bg-white rounded-xl shadow-lg p-6 mb-8">
+                <div class="flex items-center mb-4">
+                    <span class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold mr-3">Activity 3</span>
+                    <h3 class="text-xl font-bold text-gray-800">🐠 아쿠아플라넷 제주</h3>
+                </div>
+                
+                <p class="text-gray-600 mb-6">아시아 최대 규모의 아쿠아리움! 500여 종 2만 8000마리의 해양생물을 만나보세요.</p>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <div class="photo-upload-area mb-4" onclick="uploadPhoto('aquaplanet')">
+                            <div id="aquaplanet-preview" class="hidden">
+                                <img id="aquaplanet-img" class="preview-image mx-auto" />
+                            </div>
+                            <div id="aquaplanet-upload" class="upload-placeholder">
+                                <div class="text-4xl mb-2">📸</div>
+                                <p class="text-gray-600 font-medium">사진 추가하기</p>
+                                <p class="text-gray-400 text-sm">클릭하여 사진을 선택하세요</p>
+                            </div>
+                        </div>
+                        <input type="file" id="aquaplanet-input" accept="image/*" style="display: none;" onchange="handlePhotoUpload('aquaplanet')">
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-3">💭 체험 후 느낀 점</h4>
+                        <textarea 
+                            id="aquaplanet-text"
+                            class="w-full h-32 p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none resize-none"
+                            placeholder="가장 기억에 남는 해양생물과 느낀 점을 적어보세요."
+                        ></textarea>
+                        
+                        <div class="mt-4">
+                            <h5 class="font-semibold text-gray-700 mb-2">🤔 탐구 질문</h5>
+                            <p class="text-sm text-gray-600 bg-blue-50 p-3 rounded-lg">만나보고 싶은 해양생물 3가지를 조사해보고, 직접 본 해양생물 중 가장 기억에 남는 3가지를 써보세요.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button 
+                    class="save-button text-white px-6 py-2 rounded-lg font-medium mt-4 w-full md:w-auto"
+                    onclick="saveActivity('aquaplanet', '아쿠아플라넷 제주')"
+                >
+                    📱 이미지로 저장하기
+                </button>
+            </div>
+
+            <!-- 활동 4: 아르떼뮤지엄 -->
+            <div class="activity-card bg-white rounded-xl shadow-lg p-6 mb-8">
+                <div class="flex items-center mb-4">
+                    <span class="bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-3 py-1 rounded-full text-sm font-bold mr-3">Activity 4</span>
+                    <h3 class="text-xl font-bold text-gray-800">🎨 아르떼뮤지엄</h3>
+                </div>
+                
+                <p class="text-gray-600 mb-6">국내 최대 몰입형 미디어아트 전시관! 빛과 소리로 만들어진 환상적인 예술 세계</p>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <div class="photo-upload-area mb-4" onclick="uploadPhoto('arte')">
+                            <div id="arte-preview" class="hidden">
+                                <img id="arte-img" class="preview-image mx-auto" />
+                            </div>
+                            <div id="arte-upload" class="upload-placeholder">
+                                <div class="text-4xl mb-2">📸</div>
+                                <p class="text-gray-600 font-medium">사진 추가하기</p>
+                                <p class="text-gray-400 text-sm">클릭하여 사진을 선택하세요</p>
+                            </div>
+                        </div>
+                        <input type="file" id="arte-input" accept="image/*" style="display: none;" onchange="handlePhotoUpload('arte')">
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-3">💭 체험 후 느낀 점</h4>
+                        <textarea 
+                            id="arte-text"
+                            class="w-full h-32 p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none resize-none"
+                            placeholder="미디어아트의 감동과 인상깊었던 전시를 기록해보세요."
+                        ></textarea>
+                        
+                        <div class="mt-4">
+                            <h5 class="font-semibold text-gray-700 mb-2">🤔 탐구 질문</h5>
+                            <p class="text-sm text-gray-600 bg-blue-50 p-3 rounded-lg">전통 예술과 디지털 예술의 차이점은 무엇일까요? 미래의 예술은 어떤 모습일까요?</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button 
+                    class="save-button text-white px-6 py-2 rounded-lg font-medium mt-4 w-full md:w-auto"
+                    onclick="saveActivity('arte', '아르떼뮤지엄')"
+                >
+                    📱 이미지로 저장하기
+                </button>
+            </div>
+
+            <!-- 활동 5: 서프라이즈테마파크 -->
+            <div class="activity-card bg-white rounded-xl shadow-lg p-6 mb-8">
+                <div class="flex items-center mb-4">
+                    <span class="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-3 py-1 rounded-full text-sm font-bold mr-3">Activity 5</span>
+                    <h3 class="text-xl font-bold text-gray-800">♻️ 서프라이즈테마파크</h3>
+                </div>
+                
+                <p class="text-gray-600 mb-6">폐자원을 활용한 정크아트 전시공간! 환경보호와 예술의 만남을 체험해보세요.</p>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <div class="photo-upload-area mb-4" onclick="uploadPhoto('surprise')">
+                            <div id="surprise-preview" class="hidden">
+                                <img id="surprise-img" class="preview-image mx-auto" />
+                            </div>
+                            <div id="surprise-upload" class="upload-placeholder">
+                                <div class="text-4xl mb-2">📸</div>
+                                <p class="text-gray-600 font-medium">사진 추가하기</p>
+                                <p class="text-gray-400 text-sm">클릭하여 사진을 선택하세요</p>
+                            </div>
+                        </div>
+                        <input type="file" id="surprise-input" accept="image/*" style="display: none;" onchange="handlePhotoUpload('surprise')">
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-3">💭 체험 후 느낀 점</h4>
+                        <textarea 
+                            id="surprise-text"
+                            class="w-full h-32 p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none resize-none"
+                            placeholder="정크아트의 창의성과 환경보호 메시지에 대한 생각을 적어보세요."
+                        ></textarea>
+                        
+                        <div class="mt-4">
+                            <h5 class="font-semibold text-gray-700 mb-2">🤔 탐구 질문</h5>
+                            <p class="text-sm text-gray-600 bg-blue-50 p-3 rounded-lg">내가 정크아트를 창작한다면 어떤 작품을 만들고 싶나요? 그 작품의 의미는 무엇인가요?</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button 
+                    class="save-button text-white px-6 py-2 rounded-lg font-medium mt-4 w-full md:w-auto"
+                    onclick="saveActivity('surprise', '서프라이즈테마파크')"
+                >
+                    📱 이미지로 저장하기
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3일차 섹션 -->
+    <section id="day3" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">🍊 3일차 - 제주의 맛과 역사</h2>
+                <p class="text-gray-600">청귤 체험부터 제주박물관까지의 마지막 여정</p>
+            </div>
+
+            <!-- 활동 6: 알제이체험스튜디오 -->
+            <div class="activity-card bg-white rounded-xl shadow-lg p-6 mb-8">
+                <div class="flex items-center mb-4">
+                    <span class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-1 rounded-full text-sm font-bold mr-3">Activity 6</span>
+                    <h3 class="text-xl font-bold text-gray-800">🍊 알제이체험스튜디오</h3>
+                </div>
+                
+                <p class="text-gray-600 mb-6">제주 청귤 수확 및 만들기 체험! 제주도의 특산품을 직접 경험해보세요.</p>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <div class="photo-upload-area mb-4" onclick="uploadPhoto('orange')">
+                            <div id="orange-preview" class="hidden">
+                                <img id="orange-img" class="preview-image mx-auto" />
+                            </div>
+                            <div id="orange-upload" class="upload-placeholder">
+                                <div class="text-4xl mb-2">📸</div>
+                                <p class="text-gray-600 font-medium">사진 추가하기</p>
+                                <p class="text-gray-400 text-sm">클릭하여 사진을 선택하세요</p>
+                            </div>
+                        </div>
+                        <input type="file" id="orange-input" accept="image/*" style="display: none;" onchange="handlePhotoUpload('orange')">
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-3">💭 체험 후 느낀 점</h4>
+                        <textarea 
+                            id="orange-text"
+                            class="w-full h-32 p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none resize-none"
+                            placeholder="제주 청귤의 맛과 체험 과정에서 느낀 점을 적어보세요."
+                        ></textarea>
+                        
+                        <div class="mt-4">
+                            <h5 class="font-semibold text-gray-700 mb-2">🤔 탐구 질문</h5>
+                            <p class="text-sm text-gray-600 bg-blue-50 p-3 rounded-lg">제주도에서 재배되는 귤의 종류를 조사해보고, 귤을 활용한 음식을 10개 이상 적어보세요.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button 
+                    class="save-button text-white px-6 py-2 rounded-lg font-medium mt-4 w-full md:w-auto"
+                    onclick="saveActivity('orange', '알제이체험스튜디오')"
+                >
+                    📱 이미지로 저장하기
+                </button>
+            </div>
+
+            <!-- 활동 7: 국립제주박물관 -->
+            <div class="activity-card bg-white rounded-xl shadow-lg p-6 mb-8">
+                <div class="flex items-center mb-4">
+                    <span class="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-3 py-1 rounded-full text-sm font-bold mr-3">Activity 7</span>
+                    <h3 class="text-xl font-bold text-gray-800">🏛️ 국립제주박물관</h3>
+                </div>
+                
+                <p class="text-gray-600 mb-6">제주의 역사와 문화를 한눈에! 이건희 컬렉션 김홍도의 <추성부도> 특별전시 관람</p>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <div class="photo-upload-area mb-4" onclick="uploadPhoto('museum')">
+                            <div id="museum-preview" class="hidden">
+                                <img id="museum-img" class="preview-image mx-auto" />
+                            </div>
+                            <div id="museum-upload" class="upload-placeholder">
+                                <div class="text-4xl mb-2">📸</div>
+                                <p class="text-gray-600 font-medium">사진 추가하기</p>
+                                <p class="text-gray-400 text-sm">클릭하여 사진을 선택하세요</p>
+                            </div>
+                        </div>
+                        <input type="file" id="museum-input" accept="image/*" style="display: none;" onchange="handlePhotoUpload('museum')">
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-3">💭 체험 후 느낀 점</h4>
+                        <textarea 
+                            id="museum-text"
+                            class="w-full h-32 p-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none resize-none"
+                            placeholder="제주의 역사와 김홍도의 추성부도에 대한 느낌을 적어보세요."
+                        ></textarea>
+                        
+                        <div class="mt-4">
+                            <h5 class="font-semibold text-gray-700 mb-2">🤔 탐구 질문</h5>
+                            <p class="text-sm text-gray-600 bg-blue-50 p-3 rounded-lg">김홍도의 <추성부도>에 대해 조사하여 알게 된 사실을 써보고, 제주도의 역사적 특징을 설명해보세요.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button 
+                    class="save-button text-white px-6 py-2 rounded-lg font-medium mt-4 w-full md:w-auto"
+                    onclick="saveActivity('museum', '국립제주박물관')"
+                >
+                    📱 이미지로 저장하기
+                </button>
+            </div>
+
+            <!-- 여행 마무리 -->
+            <div class="activity-card bg-gradient-to-r from-pink-100 to-purple-100 rounded-xl shadow-lg p-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">🏁 제주 탐방을 마치며...</h3>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-3">💡 알게 된 점</h4>
+                        <textarea 
+                            id="learned-text"
+                            class="w-full h-32 p-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none resize-none"
+                            placeholder="3일간의 제주도 탐방을 통해 새롭게 알게 된 점들을 정리해보세요."
+                        ></textarea>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold text-gray-800 mb-3">💭 느낀 점</h4>
+                        <textarea 
+                            id="feelings-text"
+                            class="w-full h-32 p-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none resize-none"
+                            placeholder="제주도 여행을 통해 느낀 점과 앞으로의 다짐을 적어보세요."
+                        ></textarea>
+                    </div>
+                </div>
+                
+                <button 
+                    class="save-button text-white px-6 py-2 rounded-lg font-medium mt-4 w-full md:w-auto"
+                    onclick="saveActivity('summary', '제주 탐방 소감')"
+                >
+                    📱 최종 소감 저장하기
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 플로팅 버튼 -->
+    <button class="floating-btn text-white" onclick="scrollToTop()" title="맨 위로">
+        ⬆️
+    </button>
+
+    <script>
+        // 네비게이션 관련 스크립트
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const offset = 80;
+            const elementPosition = section.offsetTop;
+            const offsetPosition = elementPosition - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Intersection Observer로 현재 섹션 추적
+        const sections = document.querySelectorAll('section');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        const observerOptions = {
+            threshold: 0.3,
+            rootMargin: '-80px 0px 0px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const currentId = entry.target.id;
+                    
+                    navItems.forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    const currentNavItem = Array.from(navItems).find(item => {
+                        const onclick = item.getAttribute('onclick');
+                        return onclick && onclick.includes(currentId);
+                    });
+                    
+                    if (currentNavItem) {
+                        currentNavItem.classList.add('active');
+                    }
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // 사진 업로드 관련 스크립트
+        function uploadPhoto(activityId) {
+            const input = document.getElementById(activityId + '-input');
+            input.click();
+        }
+
+        function handlePhotoUpload(activityId) {
+            const input = document.getElementById(activityId + '-input');
+            const file = input.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById(activityId + '-img');
+                    const preview = document.getElementById(activityId + '-preview');
+                    const upload = document.getElementById(activityId + '-upload');
+                    
+                    img.src = e.target.result;
+                    preview.classList.remove('hidden');
+                    upload.classList.add('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // 드래그 앤 드롭 지원
+        document.querySelectorAll('.photo-upload-area').forEach(area => {
+            area.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('dragover');
+            });
+            
+            area.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+            });
+            
+            area.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    const activityId = this.onclick.toString().match(/'([^']+)'/)[1];
+                    const input = document.getElementById(activityId + '-input');
+                    input.files = files;
+                    handlePhotoUpload(activityId);
+                }
+            });
+        });
+
+        // 활동 저장 기능
+        function saveActivity(activityId, activityName) {
+            const img = document.getElementById(activityId + '-img');
+            const textId = activityId === 'summary' ? 
+                (activityId === 'summary' ? 'learned-text' : activityId + '-text') : 
+                activityId + '-text';
+            const text = document.getElementById(textId).value;
+            
+            // summary인 경우 learned-text와 feelings-text 모두 가져오기
+            let fullText = text;
+            if (activityId === 'summary') {
+                const learnedText = document.getElementById('learned-text').value;
+                const feelingsText = document.getElementById('feelings-text').value;
+                fullText = `알게 된 점:\n${learnedText}\n\n느낀 점:\n${feelingsText}`;
+            }
+            
+            if (!img.src.startsWith('data:') && !fullText.trim()) {
+                alert('사진을 추가하거나 느낀 점을 작성해주세요.');
+                return;
+            }
+
+            // Canvas를 사용하여 이미지와 텍스트 합성
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 캔버스 크기 설정
+            canvas.width = 800;
+            canvas.height = 1000;
+            
+            // 배경색 설정
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 제목 영역
+            ctx.fillStyle = '#1e40af';
+            ctx.fillRect(0, 0, canvas.width, 80);
+            
+            // 제목 텍스트
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 24px Arial, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(activityName, canvas.width / 2, 50);
+            
+            let yPosition = 100;
+            
+            // 이미지가 있는 경우 그리기
+            if (img.src && img.src.startsWith('data:')) {
+                const tempImg = new Image();
+                tempImg.onload = function() {
+                    // 이미지 크기 계산 (최대 너비 700px, 높이 400px)
+                    const maxWidth = 700;
+                    const maxHeight = 400;
+                    let imgWidth = tempImg.width;
+                    let imgHeight = tempImg.height;
+                    
+                    if (imgWidth > maxWidth) {
+                        imgHeight = (imgHeight * maxWidth) / imgWidth;
+                        imgWidth = maxWidth;
+                    }
+                    
+                    if (imgHeight > maxHeight) {
+                        imgWidth = (imgWidth * maxHeight) / imgHeight;
+                        imgHeight = maxHeight;
+                    }
+                    
+                    // 이미지 중앙 정렬
+                    const imgX = (canvas.width - imgWidth) / 2;
+                    ctx.drawImage(tempImg, imgX, yPosition, imgWidth, imgHeight);
+                    
+                    yPosition += imgHeight + 30;
+                    
+                    // 텍스트 영역
+                    if (fullText.trim()) {
+                        drawText(ctx, fullText, yPosition);
+                    }
+                    
+                    downloadCanvas(canvas, activityName);
+                };
+                tempImg.src = img.src;
+            } else {
+                // 이미지가 없는 경우 텍스트만
+                if (fullText.trim()) {
+                    drawText(ctx, fullText, yPosition);
+                }
+                downloadCanvas(canvas, activityName);
+            }
+        }
+        
+        function drawText(ctx, text, startY) {
+            ctx.fillStyle = '#374151';
+            ctx.font = '16px Arial, sans-serif';
+            ctx.textAlign = 'left';
+            
+            const maxWidth = 720;
+            const lineHeight = 24;
+            const x = 40;
+            let y = startY;
+            
+            // 텍스트를 줄바꿈 처리
+            const lines = text.split('\n');
+            lines.forEach(line => {
+                if (line.trim()) {
+                    const words = line.split(' ');
+                    let currentLine = '';
+                    
+                    words.forEach(word => {
+                        const testLine = currentLine + (currentLine ? ' ' : '') + word;
+                        const metrics = ctx.measureText(testLine);
+                        
+                        if (metrics.width > maxWidth && currentLine) {
+                            ctx.fillText(currentLine, x, y);
+                            y += lineHeight;
+                            currentLine = word;
+                        } else {
+                            currentLine = testLine;
+                        }
+                    });
+                    
+                    if (currentLine) {
+                        ctx.fillText(currentLine, x, y);
+                        y += lineHeight;
+                    }
+                } else {
+                    y += lineHeight / 2; // 빈 줄 처리
+                }
+            });
+        }
+        
+        function downloadCanvas(canvas, filename) {
+            // 캔버스를 이미지로 변환하여 다운로드
+            canvas.toBlob(function(blob) {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${filename}_${new Date().getTime()}.png`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                // 성공 메시지
+                alert(`"${filename}" 활동지가 저장되었습니다!`);
+            }, 'image/png');
+        }
+
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            // 현재 시간으로 날짜 표시 (실제 사용 시에는 실제 여행 날짜로 변경)
+            console.log('제주 탐방 디지털 워크북이 로드되었습니다.');
+        });
+
+        // 전체 워크북 출력/PDF 저장 기능
+        function printWorkbook() {
+            // 프린트 전용 스타일 적용
+            const printStyles = `
+                <style media="print">
+                    .progress-bar, .floating-btn { display: none !important; }
+                    body { padding-top: 0 !important; }
+                    section { break-inside: avoid; page-break-before: always; }
+                    section:first-child { page-break-before: auto; }
+                    .activity-card { break-inside: avoid; margin-bottom: 20px; }
+                    @page { margin: 1cm; }
+                </style>
+            `;
+            
+            // 현재 head에 프린트 스타일 추가
+            const head = document.head || document.getElementsByTagName('head')[0];
+            const style = document.createElement('style');
+            style.innerHTML = printStyles;
+            head.appendChild(style);
+            
+            // 프린트 다이얼로그 열기
+            window.print();
+            
+            // 프린트 후 스타일 제거
+            setTimeout(() => {
+                head.removeChild(style);
+            }, 1000);
+        }
+
+        // 완성된 워크북을 하나의 이미지로 저장
+        function downloadCompleteWorkbook() {
+            // 로딩 메시지 표시
+            const loadingMessage = document.createElement('div');
+            loadingMessage.innerHTML = `
+                <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+                           background: rgba(0,0,0,0.8); color: white; padding: 20px; border-radius: 10px; 
+                           z-index: 1000; text-align: center;">
+                    <div style="font-size: 24px; margin-bottom: 10px;">📊</div>
+                    <div>워크북을 이미지로 생성하는 중...</div>
+                    <div style="margin-top: 10px; font-size: 12px; opacity: 0.8;">잠시만 기다려주세요</div>
+                </div>
+            `;
+            document.body.appendChild(loadingMessage);
+
+            // 모든 활동의 데이터 수집
+            const activities = [
+                { id: 'running-man', name: '런닝맨 제주' },
+                { id: 'jeongbang', name: '정방폭포' },
+                { id: 'aquaplanet', name: '아쿠아플라넷 제주' },
+                { id: 'arte', name: '아르떼뮤지엄' },
+                { id: 'surprise', name: '서프라이즈테마파크' },
+                { id: 'orange', name: '알제이체험스튜디오' },
+                { id: 'museum', name: '국립제주박물관' }
+            ];
+
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 캔버스 크기 설정 (A4 비율, 큰 해상도)
+            canvas.width = 1200;
+            canvas.height = 1600;
+            
+            // 배경색 설정
+            ctx.fillStyle = '#f8fafc';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 헤더 그리기
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, 80);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, 100);
+            
+            // 제목
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 32px Arial, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('제주 탐방 디지털 워크북', canvas.width / 2, 45);
+            
+            ctx.font = '18px Arial, sans-serif';
+            ctx.fillText('다다익선 글로컬 문화탐험대', canvas.width / 2, 75);
+
+            let yPos = 130;
+
+            // 각 활동별로 요약 정보 그리기
+            activities.forEach((activity, index) => {
+                const img = document.getElementById(activity.id + '-img');
+                const text = document.getElementById(activity.id + '-text')?.value || '';
+                
+                if (img && img.src.startsWith('data:') || text.trim()) {
+                    // 활동 제목
+                    ctx.fillStyle = '#1e40af';
+                    ctx.font = 'bold 20px Arial, sans-serif';
+                    ctx.textAlign = 'left';
+                    ctx.fillText(`${index + 1}. ${activity.name}`, 40, yPos);
+                    yPos += 35;
+                    
+                    // 이미지가 있는 경우
+                    if (img && img.src.startsWith('data:')) {
+                        const tempImg = new Image();
+                        tempImg.onload = function() {
+                            const maxWidth = 300;
+                            const maxHeight = 150;
+                            let imgWidth = tempImg.width;
+                            let imgHeight = tempImg.height;
+                            
+                            if (imgWidth > maxWidth) {
+                                imgHeight = (imgHeight * maxWidth) / imgWidth;
+                                imgWidth = maxWidth;
+                            }
+                            
+                            if (imgHeight > maxHeight) {
+                                imgWidth = (imgWidth * maxHeight) / imgHeight;
+                                imgHeight = maxHeight;
+                            }
+                            
+                            ctx.drawImage(tempImg, 40, yPos, imgWidth, imgHeight);
+                        };
+                        tempImg.src = img.src;
+                        yPos += 160;
+                    }
+                    
+                    // 텍스트가 있는 경우
+                    if (text.trim()) {
+                        ctx.fillStyle = '#374151';
+                        ctx.font = '14px Arial, sans-serif';
+                        
+                        const lines = text.split('\n');
+                        lines.forEach(line => {
+                            if (line.trim()) {
+                                const words = line.split(' ');
+                                let currentLine = '';
+                                
+                                words.forEach(word => {
+                                    const testLine = currentLine + (currentLine ? ' ' : '') + word;
+                                    const metrics = ctx.measureText(testLine);
+                                    
+                                    if (metrics.width > 1100 && currentLine) {
+                                        ctx.fillText(currentLine, 40, yPos);
+                                        yPos += 20;
+                                        currentLine = word;
+                                    } else {
+                                        currentLine = testLine;
+                                    }
+                                });
+                                
+                                if (currentLine) {
+                                    ctx.fillText(currentLine, 40, yPos);
+                                    yPos += 20;
+                                }
+                            }
+                        });
+                    }
+                    
+                    yPos += 30; // 활동 간 간격
+                }
+            });
+
+            // 소감 부분 추가
+            const learnedText = document.getElementById('learned-text')?.value || '';
+            const feelingsText = document.getElementById('feelings-text')?.value || '';
+            
+            if (learnedText.trim() || feelingsText.trim()) {
+                ctx.fillStyle = '#1e40af';
+                ctx.font = 'bold 20px Arial, sans-serif';
+                ctx.fillText('제주 탐방 소감', 40, yPos);
+                yPos += 35;
+                
+                if (learnedText.trim()) {
+                    ctx.fillStyle = '#374151';
+                    ctx.font = 'bold 16px Arial, sans-serif';
+                    ctx.fillText('알게 된 점:', 40, yPos);
+                    yPos += 25;
+                    
+                    ctx.font = '14px Arial, sans-serif';
+                    const learnedLines = learnedText.split('\n');
+                    learnedLines.forEach(line => {
+                        if (line.trim()) {
+                            ctx.fillText(line, 40, yPos);
+                            yPos += 20;
+                        }
+                    });
+                    yPos += 15;
+                }
+                
+                if (feelingsText.trim()) {
+                    ctx.fillStyle = '#374151';
+                    ctx.font = 'bold 16px Arial, sans-serif';
+                    ctx.fillText('느낀 점:', 40, yPos);
+                    yPos += 25;
+                    
+                    ctx.font = '14px Arial, sans-serif';
+                    const feelingsLines = feelingsText.split('\n');
+                    feelingsLines.forEach(line => {
+                        if (line.trim()) {
+                            ctx.fillText(line, 40, yPos);
+                            yPos += 20;
+                        }
+                    });
+                }
+            }
+
+            // 로딩 메시지 제거
+            document.body.removeChild(loadingMessage);
+
+            // 다운로드
+            canvas.toBlob(function(blob) {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `제주탐방_완성워크북_${new Date().getTime()}.png`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                alert('완성된 워크북이 이미지로 저장되었습니다!');
+            }, 'image/png');
+        }
+    </script>
+</body>
+</html>
