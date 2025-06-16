@@ -609,10 +609,17 @@
                 </div>
                 
                 <button 
-                    class="save-button text-white px-6 py-2 rounded-lg font-medium mt-4 w-full md:w-auto"
+                    class="save-button text-white px-6 py-2 rounded-lg font-medium mt-4 w-full md:w-auto mr-4"
                     onclick="saveActivity('summary', '제주 탐방 소감')"
                 >
                     📱 최종 소감 저장하기
+                </button>
+                
+                <button 
+                    class="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white px-6 py-2 rounded-lg font-medium mt-4 w-full md:w-auto transition-all duration-300"
+                    onclick="printAllActivities()"
+                >
+                    📋 활동 결과 출력
                 </button>
             </div>
         </div>
@@ -1098,6 +1105,280 @@
                 
                 alert('완성된 워크북이 이미지로 저장되었습니다!');
             }, 'image/png');
+        }
+
+        // 모든 활동 결과 출력 기능
+        function printAllActivities() {
+            // 모든 활동 데이터 수집
+            const activities = [
+                // 1일차
+                { 
+                    day: '1일차 (8월 7일)', 
+                    dayColor: '#ef4444',
+                    items: [
+                        { id: 'running-man', name: '🏃‍♂️ 런닝맨 제주', question: '제주도가 관광지로 유명해진 이유는?' },
+                        { id: 'jeongbang', name: '💧 정방폭포', question: '제주도 3대 폭포와 관광 상품 아이디어' }
+                    ]
+                },
+                // 2일차
+                { 
+                    day: '2일차 (8월 8일)', 
+                    dayColor: '#3b82f6',
+                    items: [
+                        { id: 'aquaplanet', name: '🐠 아쿠아플라넷 제주', question: '가장 기억에 남는 해양생물' },
+                        { id: 'arte', name: '🎨 아르떼뮤지엄', question: '미디어아트의 감동과 인상깊었던 전시' },
+                        { id: 'surprise', name: '♻️ 서프라이즈테마파크', question: '정크아트의 창의성과 환경보호 메시지' }
+                    ]
+                },
+                // 3일차
+                { 
+                    day: '3일차 (8월 9일)', 
+                    dayColor: '#10b981',
+                    items: [
+                        { id: 'orange', name: '🍊 알제이체험스튜디오', question: '제주 청귤의 맛과 체험 과정' },
+                        { id: 'museum', name: '🏛️ 국립제주박물관', question: '제주의 역사와 김홍도의 추성부도' }
+                    ]
+                }
+            ];
+
+            // 최종 소감
+            const learnedText = document.getElementById('learned-text')?.value || '';
+            const feelingsText = document.getElementById('feelings-text')?.value || '';
+
+            // 출력용 HTML 생성
+            let printContent = `
+                <!DOCTYPE html>
+                <html lang="ko">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>제주 탐방 활동 결과</title>
+                    <style>
+                        body { 
+                            font-family: 'Malgun Gothic', sans-serif; 
+                            line-height: 1.6; 
+                            margin: 20px; 
+                            color: #333;
+                        }
+                        .header { 
+                            text-align: center; 
+                            border-bottom: 3px solid #667eea; 
+                            padding-bottom: 20px; 
+                            margin-bottom: 30px;
+                        }
+                        .header h1 { 
+                            color: #667eea; 
+                            margin: 0; 
+                            font-size: 28px;
+                        }
+                        .header p { 
+                            color: #666; 
+                            margin: 5px 0 0 0;
+                            font-size: 16px;
+                        }
+                        .day-section { 
+                            margin-bottom: 40px; 
+                            break-inside: avoid;
+                        }
+                        .day-header { 
+                            background: linear-gradient(135deg, var(--day-color), var(--day-color-dark));
+                            color: white; 
+                            padding: 15px 20px; 
+                            border-radius: 10px; 
+                            font-size: 20px; 
+                            font-weight: bold;
+                            margin-bottom: 20px;
+                        }
+                        .activity { 
+                            border: 2px solid #e5e7eb; 
+                            border-radius: 10px; 
+                            padding: 20px; 
+                            margin-bottom: 20px;
+                            background: #fafafa;
+                            break-inside: avoid;
+                        }
+                        .activity-title { 
+                            color: #1e40af; 
+                            font-size: 18px; 
+                            font-weight: bold; 
+                            margin-bottom: 15px;
+                            border-bottom: 1px solid #ddd;
+                            padding-bottom: 8px;
+                        }
+                        .activity-content { 
+                            margin-bottom: 15px;
+                        }
+                        .activity-question { 
+                            background: #eff6ff; 
+                            padding: 10px; 
+                            border-radius: 5px; 
+                            font-size: 14px;
+                            color: #1e40af;
+                            margin-top: 10px;
+                        }
+                        .final-thoughts { 
+                            background: linear-gradient(135deg, #fce7f3, #e0e7ff); 
+                            padding: 25px; 
+                            border-radius: 15px; 
+                            margin-top: 40px;
+                            break-inside: avoid;
+                        }
+                        .final-thoughts h3 { 
+                            color: #7c3aed; 
+                            margin-top: 0;
+                            font-size: 20px;
+                        }
+                        .thought-section { 
+                            margin-bottom: 20px;
+                        }
+                        .thought-title { 
+                            font-weight: bold; 
+                            color: #4c1d95; 
+                            margin-bottom: 8px;
+                            font-size: 16px;
+                        }
+                        .no-content { 
+                            color: #999; 
+                            font-style: italic;
+                            font-size: 14px;
+                        }
+                        .image-placeholder {
+                            background: #f3f4f6;
+                            border: 2px dashed #d1d5db;
+                            border-radius: 8px;
+                            padding: 20px;
+                            text-align: center;
+                            color: #6b7280;
+                            margin: 10px 0;
+                            font-size: 14px;
+                        }
+                        @media print {
+                            body { margin: 15px; }
+                            .day-section { page-break-inside: avoid; }
+                            .activity { page-break-inside: avoid; }
+                            .final-thoughts { page-break-inside: avoid; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>🏝️ 제주 탐방 활동 결과</h1>
+                        <p>다다익선 글로컬 문화탐험대 • 2024년 8월 7일 ~ 9일</p>
+                        <p style="margin-top: 15px; font-size: 14px;">
+                            <strong>학교:</strong> _________________ 
+                            <strong>학년 반:</strong> _____ 학년 _____ 반 
+                            <strong>이름:</strong> _________________
+                        </p>
+                    </div>
+            `;
+
+            // 각 날짜별 활동 추가
+            activities.forEach(dayData => {
+                let hasContent = false;
+                
+                // 해당 날짜에 내용이 있는지 확인
+                dayData.items.forEach(activity => {
+                    const img = document.getElementById(activity.id + '-img');
+                    const text = document.getElementById(activity.id + '-text')?.value || '';
+                    if ((img && img.src.startsWith('data:')) || text.trim()) {
+                        hasContent = true;
+                    }
+                });
+
+                if (hasContent) {
+                    printContent += `
+                        <div class="day-section">
+                            <div class="day-header" style="--day-color: ${dayData.dayColor}; --day-color-dark: ${adjustColor(dayData.dayColor, -20)};">
+                                ${dayData.day}
+                            </div>
+                    `;
+
+                    dayData.items.forEach(activity => {
+                        const img = document.getElementById(activity.id + '-img');
+                        const text = document.getElementById(activity.id + '-text')?.value || '';
+                        
+                        if ((img && img.src.startsWith('data:')) || text.trim()) {
+                            printContent += `
+                                <div class="activity">
+                                    <div class="activity-title">${activity.name}</div>
+                                    <div class="activity-content">
+                            `;
+                            
+                            if (img && img.src.startsWith('data:')) {
+                                printContent += `<div style="text-align: center; margin: 15px 0;">
+                                    <img src="${img.src}" style="max-width: 400px; max-height: 300px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />
+                                </div>`;
+                            } else {
+                                printContent += `<div class="image-placeholder">📸 사진이 첨부되지 않았습니다</div>`;
+                            }
+                            
+                            if (text.trim()) {
+                                printContent += `<div style="margin-top: 15px;"><strong>💭 체험 후 느낀 점:</strong><br/>${text.replace(/\n/g, '<br/>')}</div>`;
+                            } else {
+                                printContent += `<div class="no-content">체험 후 느낀 점이 작성되지 않았습니다.</div>`;
+                            }
+                            
+                            printContent += `
+                                    </div>
+                                    <div class="activity-question">
+                                        <strong>🤔 탐구 질문:</strong> ${activity.question}
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    });
+
+                    printContent += `</div>`;
+                }
+            });
+
+            // 최종 소감 추가
+            if (learnedText.trim() || feelingsText.trim()) {
+                printContent += `
+                    <div class="final-thoughts">
+                        <h3>🏁 제주 탐방을 마치며...</h3>
+                        <div class="thought-section">
+                            <div class="thought-title">💡 알게 된 점:</div>
+                            <div>${learnedText.trim() ? learnedText.replace(/\n/g, '<br/>') : '<span class="no-content">작성된 내용이 없습니다.</span>'}</div>
+                        </div>
+                        <div class="thought-section">
+                            <div class="thought-title">💭 느낀 점:</div>
+                            <div>${feelingsText.trim() ? feelingsText.replace(/\n/g, '<br/>') : '<span class="no-content">작성된 내용이 없습니다.</span>'}</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            printContent += `
+                </body>
+                </html>
+            `;
+
+            // 새 창에서 출력
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(printContent);
+            printWindow.document.close();
+            
+            // 이미지 로드 대기 후 프린트
+            setTimeout(() => {
+                printWindow.focus();
+                printWindow.print();
+            }, 1000);
+        }
+
+        // 색상 조정 함수
+        function adjustColor(color, amount) {
+            const usePound = color[0] === '#';
+            const col = usePound ? color.slice(1) : color;
+            const num = parseInt(col, 16);
+            let r = (num >> 16) + amount;
+            let g = (num >> 8 & 0x00FF) + amount;
+            let b = (num & 0x0000FF) + amount;
+            
+            r = r > 255 ? 255 : r < 0 ? 0 : r;
+            g = g > 255 ? 255 : g < 0 ? 0 : g;
+            b = b > 255 ? 255 : b < 0 ? 0 : b;
+            
+            return (usePound ? '#' : '') + (r << 16 | g << 8 | b).toString(16).padStart(6, '0');
         }
     </script>
 </body>
